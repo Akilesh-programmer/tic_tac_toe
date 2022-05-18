@@ -76,15 +76,13 @@ def single_player():
                         if single_player_functions.check_move_available(player_move, moves_available):
                             board[player_move] = player_symbol
                             moves_available.remove(player_move)
-
                             number_of_moves_done += 1
 
-                    if number_of_moves_done % 2 != 0:
+                    if number_of_moves_done % 2 != 0 and number_of_moves_done < 9:
                         # Computers' move.
                         computer_move = single_player_functions.computer_move_(moves_available)
                         board[computer_move] = computer_symbol
                         moves_available.remove(computer_move)
-
                         number_of_moves_done += 1
 
                 # If the player wants to go second.
@@ -95,16 +93,14 @@ def single_player():
                         if single_player_functions.check_move_available(player_move, moves_available):
                             board[player_move] = player_symbol
                             moves_available.remove(player_move)
+                            number_of_moves_done += 1
 
-                        print("Player moving.")
-                        number_of_moves_done += 1
-                    if number_of_moves_done % 2 == 0:
+                    if number_of_moves_done % 2 == 0 and number_of_moves_done < 9:
                         # Computer's move.
                         print("Computer moving.")
                         computer_move = single_player_functions.computer_move_(moves_available)
                         board[computer_move] = computer_symbol
                         moves_available.remove(computer_move)
-
                         number_of_moves_done += 1
 
         # Background colour of the screen.
@@ -168,8 +164,8 @@ def single_player():
             print(f"{winner} wins.")
             break
         if common_functions.check_draw(moves_available):
-            game_on = False
             print("Draw")
+            break
 
         # Updating the display.
         pygame.display.update()

@@ -64,17 +64,15 @@ def multiplayer():
                     if player_1_move in moves_available:
                         board[player_1_move] = player_1_symbol
                         moves_available.remove(player_1_move)
-
                         number_of_moves += 1
 
-                if number_of_moves % 2 != 0:
+                if number_of_moves % 2 != 0 and number_of_moves < 9:
                     # Move to be done by player 2.
                     player_2_move = clicked_square
                     # Checking if the move is valid.
                     if player_2_move in moves_available:
                         board[player_2_move] = player_2_symbol
                         moves_available.remove(player_2_move)
-
                         number_of_moves += 1
 
         # Background colour
