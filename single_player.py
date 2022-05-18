@@ -167,6 +167,7 @@ def single_player():
         if winner == "X" or winner == "O":
             game_on = False
             print(f"{winner} wins.")
+            break
         if common_functions.check_draw(moves_available):
             game_on = False
             print("Draw")
