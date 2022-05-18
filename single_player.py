@@ -165,7 +165,6 @@ def single_player():
         # Checking for wins and draw.
         winner = common_functions.check_win(board)
         if winner == "X" or winner == "O":
-            game_on = False
             print(f"{winner} wins.")
             break
         if common_functions.check_draw(moves_available):
