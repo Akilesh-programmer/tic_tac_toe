@@ -1,0 +1,8 @@
+SCREEN_SIZE = (600, 600)
+TIC_TAC_TOE_IMAGE = "images/tic_tac_toe.png"
+NOT_IMAGE = "images/O.png"
+CROSS_IMAGE = "images/X.png"
+BACKGROUND_COLOUR = (85, 225, 209)
+LINE_WIDTH = 10
+LINE_COLOUR = (125, 152, 235)
+DEFAULT_IMAGE_SIZE = (100, 100)
