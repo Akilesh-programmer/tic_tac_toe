@@ -1,116 +1,86 @@
-# Imports
+#  Imports
 import pygame
 import constants
-import single_player_functions
+import multiplayer_functions
 import common_functions
 
 
-def single_player():
-    # Asking the player who is first.
-    first = single_player_functions.who_first()
-
-    # Asking the player if they want to be X or O.
-    player_symbol = single_player_functions.x_or_o_()
-
-    # Setting computer symbol.
-    if player_symbol == "X":
-        computer_symbol = "O"
+# Creating a function for the gameplay for multiplayer.
+def multiplayer():
+    # Defining the symbol's of the players.
+    player_1_symbol = multiplayer_functions.start_symbol()
+    if player_1_symbol == 'X':
+        player_2_symbol = 'O'
     else:
-        computer_symbol = "X"
+        player_2_symbol = 'X'
 
-    # Board where the data will be stored.
+    # Board
     board = {1: '', 2: '', 3: '', 4: '', 5: '', 6: '', 7: '', 8: '', 9: ''}
-
-    # Creating a list to store the moves available.
+    # Creating a list to store moves available.
     moves_available = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    # Initializing pygame
+    # Initializing pygame.
     pygame.init()
-
     # Screen
     screen = pygame.display.set_mode(constants.SCREEN_SIZE)
-
     # Title
     pygame.display.set_caption("Tic Tac Toe")
-
     # Icon
     icon = pygame.image.load(constants.TIC_TAC_TOE_IMAGE)
     pygame.display.set_icon(icon)
-
-    # Game
-    game_on = True
-
-    # Variable to track the number of moves done.
-    number_of_moves_done = 0
-
     # Images
     x_image = pygame.image.load(constants.CROSS_IMAGE)
     o_image = pygame.image.load(constants.NOT_IMAGE)
     x_image = pygame.transform.scale(x_image, constants.DEFAULT_IMAGE_SIZE)
     o_image = pygame.transform.scale(o_image, constants.DEFAULT_IMAGE_SIZE)
 
+    # Game boolean variable
+    game_on = True
+    # Variable to track the number of moves.
+    number_of_moves = 0
+
     number_of_times_running = 0
 
     while game_on:
         number_of_times_running += 1
         if number_of_times_running == 1:
-            print("Click anywhere in the recently opened window to start.")
+            print("CLick on the recently opened window to start.")
+        # Getting all the events happening in the screen.
         for event in pygame.event.get():
-            # Quitting the game if the player presses cross button.
+            # Quitting the game if the user clicks the wrong button.
             if event.type == pygame.QUIT:
                 game_on = False
-
-            # Detecting the click in mouse button.
+            # Detecting the click in the mouse button.
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Getting the coordinates of the click.
                 position = event.pos
                 # Finding the square which was clicked.
                 clicked_square = common_functions.find_square_clicked(position)
 
-                # If player wants to go first.
-                if first == 1:
-                    if number_of_moves_done % 2 == 0:
-                        # Player's move.
-                        player_move = clicked_square
-                        # Checking if player's move is available.
-                        if single_player_functions.check_move_available(player_move, moves_available):
-                            board[player_move] = player_symbol
-                            moves_available.remove(player_move)
+                if number_of_moves % 2 == 0 or number_of_moves == 0:
+                    # Move to be done by player 1.
+                    player_1_move = clicked_square
+                    # Checking if the move is valid.
+                    if player_1_move in moves_available:
+                        board[player_1_move] = player_1_symbol
+                        moves_available.remove(player_1_move)
 
-                            number_of_moves_done += 1
+                        number_of_moves += 1
 
-                    if number_of_moves_done % 2 != 0:
-                        # Computers' move.
-                        computer_move = single_player_functions.computer_move_(moves_available)
-                        board[computer_move] = computer_symbol
-                        moves_available.remove(computer_move)
+                if number_of_moves % 2 != 0:
+                    # Move to be done by player 2.
+                    player_2_move = clicked_square
+                    # Checking if the move is valid.
+                    if player_2_move in moves_available:
+                        board[player_2_move] = player_2_symbol
+                        moves_available.remove(player_2_move)
 
-                        number_of_moves_done += 1
+                        number_of_moves += 1
 
-                # If the player wants to go second.
-                elif first == 2:
-                    if number_of_moves_done % 2 != 0:
-                        # Player's move.
-                        player_move = clicked_square
-                        if single_player_functions.check_move_available(player_move, moves_available):
-                            board[player_move] = player_symbol
-                            moves_available.remove(player_move)
-
-                        print("Player moving.")
-                        number_of_moves_done += 1
-                    if number_of_moves_done % 2 == 0:
-                        # Computer's move.
-                        print("Computer moving.")
-                        computer_move = single_player_functions.computer_move_(moves_available)
-                        board[computer_move] = computer_symbol
-                        moves_available.remove(computer_move)
-
-                        number_of_moves_done += 1
-
-        # Background colour of the screen.
+        # Background colour
         screen.fill(constants.BACKGROUND_COLOUR)
 
-        # Drawing lines.
+        # Draw lines
         pygame.draw.line(screen, constants.LINE_COLOUR, (400, 0), (400, 600), constants.LINE_WIDTH)
         pygame.draw.line(screen, constants.LINE_COLOUR, (200, 0), (200, 600), constants.LINE_WIDTH)
         pygame.draw.line(screen, constants.LINE_COLOUR, (0, 200), (600, 200), constants.LINE_WIDTH)
@@ -173,3 +143,6 @@ def single_player():
 
         # Updating the display.
         pygame.display.update()
+
+
+multiplayer()
