@@ -143,6 +143,3 @@ def multiplayer():
 
         # Updating the display.
         pygame.display.update()
-
-
-multiplayer()
